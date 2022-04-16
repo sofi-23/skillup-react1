@@ -35,7 +35,7 @@ export default function Login () {
                 <h2>Login successful</h2>
             )
             const token = res.data.token;
-            localStorage.setItem('token', token);
+            sessionStorage.setItem('token', token);
             navigate("/list")
         })
         .catch(err => {
