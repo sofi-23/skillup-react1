@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import swAlert from '@sweetalert/with-react';
 
-export default function List() {
+export default function List({addOrRemoveFromFavs}) {
+
     const [moviesList, setMoviesList] = useState([]);
     const navigate = useNavigate();
     let token = sessionStorage.getItem('token');
@@ -19,7 +20,6 @@ export default function List() {
         axios.get(endpoint)
         .then(res=> {
             setMoviesList(res.data.results)
-            console.log(moviesList)
         })
         .catch(err=> {
             console.log(err)
@@ -35,7 +35,12 @@ export default function List() {
                     <div key={key} className="d-flex flex-column m-auto w-50">
                         <h3>{movie.original_title}</h3>
                         <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.original_title} />
-                        <Link className="btn btn-primary" to={`=/detail?movieID=${movie.id}`}>View Details</Link>
+                        <button 
+                        className="btn btn-danger" 
+                        onClick={addOrRemoveFromFavs}
+                        data-movieId={movie.id}
+                        >fav</button>
+                        <Link className="btn btn-primary" to={`/detail?movieID=${movie.id}`}>View Details</Link>
                     </div>
                     )
             }   
